@@ -24,6 +24,9 @@
         requiredFields.forEach((field) => {
             if (field.value === blank) {
                 allempty.push(1);
+                field.parentElement.classList.add('has-error');
+            } else {
+                field.parentElement.classList.remove('has-error');
             }
         });
 
@@ -42,9 +45,6 @@
                     scroll_firstempty(`#${field.getAttribute('id')}`);
                     condition = true;
                 }
-                field.parentElement.classList.add('has-error');
-            } else {
-                field.parentElement.classList.remove('has-error');
             }
         });
 
