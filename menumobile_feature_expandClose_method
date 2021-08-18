@@ -1,0 +1,10 @@
+$('#mobile-menu').on('click', function(e){
+  var rules = ['search-text', 'icon-angle-right', 'search-submit', 'close-x'];
+   if(typeof e.target.href !== 'undefined' || rules.includes(e.target.className) === true){
+      //Any Event
+   }else{
+     if(e.target.className === 'mobile-menu'){
+        $('.close-x').click();
+     }
+   }
+});
