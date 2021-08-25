@@ -1,0 +1,44 @@
+function addEventListenerStamped(el, eventName, handler) {
+
+if (el.addEventListener) { el.addEventListener(eventName, handler); }
+else { el.attachEvent('on' + eventName, function () { handler.call(el); }); }
+
+}
+
+addEventListenerStamped(document, 'stamped:reviews:loaded', function(e) {
+var ratingCount = jQueryStamped('meta[itemprop="reviewCount"]').attr('content');
+var ratingValue = jQueryStamped('meta[itemprop="ratingValue"]').attr('content');
+
+
+var richSnippet = {
+"@context": "http://schema.org",
+"@type": "Product",
+  "name": "[name]",
+  "image": "[image1]",
+  "description": "[extended_description]",
+  "brand": "[manufacturer_name]",
+  "sku": "[catalogid]",
+  "offers": {
+    "@type": "Offer",
+    "url": "[product_url]",
+    "priceCurrency": "[priceCurrency]",
+    "price": "[price_without_currency]",
+    "priceValidUntil": "2064-02-01",
+    "availability": "https://schema.org/InStock",
+    "itemCondition": "https://schema.org/NewCondition",
+"@id": "[product_url]"
+  }
+}
+
+if (parseInt(ratingValue) > 0){
+richSnippet.aggregateRating = {
+"@type": "AggregateRating",
+"ratingValue": ratingValue,
+"reviewCount": ratingCount
+}
+}
+var script = document.createElement('script');
+script.type = 'application/ld+json';
+script.innerHTML = JSON.stringify(richSnippet);
+document.getElementsByTagName('head')[0].appendChild(script);
+});
